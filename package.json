@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Serverless backend Todo Udacity project",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.19.2",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
