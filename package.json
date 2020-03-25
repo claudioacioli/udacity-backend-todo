@@ -6,7 +6,8 @@
     "@types/axios": "^0.14.0",
     "axios": "^0.19.2",
     "jsonwebtoken": "^8.5.1",
-    "source-map-support": "^0.5.10"
+    "source-map-support": "^0.5.10",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
