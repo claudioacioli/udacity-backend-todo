@@ -20,14 +20,19 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     TODOS_TABLE: Todos-${self:provider.stage}
+    TODOS_USER_INDEX: TodoUserIndex
 
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:Query
         - dynamodb:PutItem
+        - dynamodb:Query
       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
-      
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_USER_INDEX}
+
 functions:
 
   Auth:
@@ -44,6 +49,20 @@ functions:
           cors: true
           authorizer: Auth
 
+  GetTodos:
+    handler: src/lambda/http/getTodos.handler
+    events:
+      - http:
+          method: get
+          path: todos
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_USER_INDEX}
+
 resources:
   Resources:
     TodosDynamoDBTable:
@@ -58,7 +77,7 @@ resources:
           - AttributeName: id
             KeyType: HASH
         GlobalSecondaryIndexes:
-          - IndexName: TodoUserIndex
+          - IndexName: ${self:provider.environment.TODOS_USER_INDEX}
             KeySchema:
             - AttributeName: userId
               KeyType: HASH
