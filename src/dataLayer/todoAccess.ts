@@ -35,6 +35,26 @@ export class TodoAccess {
     return todoItem
   }
 
+  async updateTodo(id:string, todoItem: TodoItem): Promise<TodoItem> {
+    await this.docClient.update({
+      TableName: this.todosTable,
+      Key:{ 'id': id },
+      UpdateExpression: 'set #name = :name, #dueDate = :dueDate, #done = :done',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#dueDate': 'dueDate',
+        '#done': 'done'
+      },
+      ExpressionAttributeValues: {
+        ':name': todoItem.name,
+        ':dueDate': todoItem.dueDate,
+        ':done': todoItem.done
+      }
+    }).promise()
+
+    return todoItem
+  }
+
 }
 
 const createDynamoDBClient = () => {
