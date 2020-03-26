@@ -39,3 +39,9 @@ export async function updateTodo(
     }
   )
 }
+
+export async function deleteTodo(
+  id: string
+): void {
+  await todoAccess.deleteTodo(id)
+}
