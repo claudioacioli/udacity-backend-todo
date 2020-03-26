@@ -87,6 +87,24 @@ functions:
 
 resources:
   Resources:
+    AttachmentBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.TODOS_IMAGES_S3_BUCKET}
+        CorsConfiguration:
+          CorsRules:
+            -
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+
     TodosDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
