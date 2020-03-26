@@ -50,6 +50,15 @@ functions:
           cors: true
           authorizer: Auth
 
+  DeleteTodo:
+    handler: src/lambda/http/deleteTodo.handler
+    events:
+      - http:
+          method: delete
+          path: todos/{todoId}
+          cors: true
+          authorizer: Auth
+
   UpdateTodo:
     handler: src/lambda/http/updateTodo.handler
     events:
