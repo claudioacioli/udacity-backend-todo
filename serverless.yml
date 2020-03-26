@@ -21,6 +21,8 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_USER_INDEX: TodoUserIndex
+    TODOS_IMAGES_S3_BUCKET: udacity-backend-images-${self:provider.stage}
+    TODOS_SIGNED_URL_EXPIRATION: 300
 
   iamRoleStatements:
     - Effect: Allow
