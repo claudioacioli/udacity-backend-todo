@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk'
+import * as AWSXRay from 'aws-xray-sdk'
 
 export class S3Access {
   
@@ -33,7 +34,8 @@ export class S3Access {
 }
 
 const createS3Object = (): AWS.S3 => {
-  return new AWS.S3({
+  const XAWS = AWSXRay.captureAWS(AWS)
+  return new XAWS.S3({
     signatureVersion: 'v4'
   })
 }
