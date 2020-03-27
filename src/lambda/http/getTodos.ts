@@ -7,7 +7,11 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   
   const jwtToken = getToken(event.headers.Authorization)
   const todos = await getTodosByUser(jwtToken)
-  
+
+  for(const todo of todos) {
+    todo["attachmentUrl"] = todo.imageUrl
+  }
+
   return {
     statusCode: 200,
     headers: {
