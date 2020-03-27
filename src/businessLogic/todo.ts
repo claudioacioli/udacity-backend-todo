@@ -23,8 +23,8 @@ export async function createTodo(
     userId: userId,
     createdAt: new Date().toISOString(),
     name: createTodoRequest.name,
-    dueDate: false,
-    done: createTodoRequest.done === true ? true : false,
+    dueDate: createTodoRequest.dueDate,
+    done: false,
     imageUrl: `https://${bucketName}.s3.amazonaws.com/${todoId}`
   })
 }
