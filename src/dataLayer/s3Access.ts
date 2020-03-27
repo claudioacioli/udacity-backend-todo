@@ -8,6 +8,19 @@ export class S3Access {
     private readonly urlExpiration = 300
   ) {
   }
+  
+  async getAttachmentUrl(todoId: string): Promise<string> {
+    try{
+      await this.s3.headObject({
+        Bucket: this.bucketName,
+        Key: todoId
+      }).promise()
+      return `https://${this.bucketName}.s3.amazonaws.com/${todoId}`
+    } catch(err) {
+      console.error(err)
+      return null
+    }
+  }
 
   getUploadUrl(todoId: string): string {
     return this.s3.getSignedUrl('putObject', {
