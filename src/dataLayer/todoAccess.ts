@@ -35,10 +35,10 @@ export class TodoAccess {
     return todoItem
   }
 
-  async updateTodo(id:string, todoItem: TodoItem): Promise<TodoItem> {
+  async updateTodo(todoId:string, todoItem: TodoItem): Promise<TodoItem> {
     await this.docClient.update({
       TableName: this.todosTable,
-      Key:{ 'id': id },
+      Key:{ 'todoId': todoId },
       UpdateExpression: 'set #name = :name, #dueDate = :dueDate, #done = :done',
       ExpressionAttributeNames: {
         '#name': 'name',
@@ -55,10 +55,10 @@ export class TodoAccess {
     return todoItem
   }
 
-  async deleteTodo(id: string): void{
+  async deleteTodo(todoId: string): void{
     await this.docClient.delete({
       TableName: this.todosTable,
-      Key: { "id": id }
+      Key: { "todoId": todoId }
     }).promise()
   }
 

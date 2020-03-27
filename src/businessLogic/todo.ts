@@ -5,6 +5,7 @@ import { CreateTodoRequest, UpdateTodoRequest } from '../requests/CreateTodoRequ
 import { parseUserId } from '../auth/utils'
 
 const todoAccess = new TodoAccess()
+const bucketName = process.env.TODOS_IMAGES_S3_BUCKET
 
 export async function getTodosByUser(jwtToken: string): Promise<TodoItem[]> {
   return todoAccess.getTodosByUser(parseUserId(jwtToken))
@@ -18,20 +19,22 @@ export async function createTodo(
   const userId = parseUserId(jwtToken)
 
   return await todoAccess.createTodo({
-    id: todoId,
+    todoId: todoId,
     userId: userId,
     createdAt: new Date().toISOString(),
     name: createTodoRequest.name,
-    dueDate: createTodoRequest.dueDate
+    dueDate: false,
+    done: createTodoRequest.done === true ? true : false,
+    imageUrl: `https://${bucketName}.s3.amazonaws.com/${todoId}`
   })
 }
 
 export async function updateTodo(
-  id: string,
+  todoId: string,
   updateTodoRequest: UpdateTodoRequest
 ): Promise<TodoItem> {
   return await todoAccess.updateTodo(
-    id,
+    todoId,
     {
       name: updateTodoRequest.name,
       dueDate: updateTodoRequest.dueDate,
@@ -41,7 +44,7 @@ export async function updateTodo(
 }
 
 export async function deleteTodo(
-  id: string
+  todoId: string
 ): void {
-  await todoAccess.deleteTodo(id)
+  await todoAccess.deleteTodo(todoId)
 }
