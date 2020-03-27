@@ -35,6 +35,12 @@ serverless deploy -v
 
 ### Test on AWS
 
+The url for this project on AWS is:
+
+```
+https://fchmg7sj8c.execute-api.us-east-1.amazonaws.com/dev
+```
+
 For test this app on AWS:
 
 - Make sure you have [Postman](https://www.postman.com/downloads/canary) installed.
@@ -45,7 +51,6 @@ curl -o Todo.postman_collection.json https://raw.githubusercontent.com/claudioac
 ```
 
 - [Import](https://kb.datamotion.com/?ht_kb=postman-instructions-for-exporting-and-importing) them on Postman
-- Use the URL below :
 - Set [variables](https://learning.postman.com/docs/postman/variables-and-environments/variables/#defining-variables) on Postman:
 ```bash
 {{apiId}} = fchmg7sj8c
