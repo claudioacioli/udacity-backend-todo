@@ -5,6 +5,16 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+  documentation:
+    api:
+      info:
+        version: v1.0.0
+        title: Udacity Todo
+        description: Todo for Udacity Nanodegree Project
+    models:
+      - name: TodoRequest
+        contentType: application/json
+        schema: ${file(models/create-todo-request.json)}
 
 plugins:
   - serverless-webpack
@@ -57,6 +67,12 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Create Todo
+            description: Create a new todo item
+            requestModels:
+              'application/json': TodoRequest
 
   DeleteTodo:
     handler: src/lambda/http/deleteTodo.handler
@@ -101,6 +117,16 @@ functions:
 
 resources:
   Resources:
+
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
+
     AttachmentBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -118,6 +144,7 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 3000
+
     BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
