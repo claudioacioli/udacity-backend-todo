@@ -4,6 +4,7 @@
   "description": "Serverless backend Todo Udacity project",
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "aws-xray-sdk": "^2.5.0",
     "axios": "^0.19.2",
     "jsonwebtoken": "^8.5.1",
     "source-map-support": "^0.5.10",
@@ -17,6 +18,7 @@
     "aws-sdk": "^2.646.0",
     "fork-ts-checker-webpack-plugin": "^3.0.1",
     "serverless-iam-roles-per-function": "^2.0.2",
+    "serverless-plugin-tracing": "^2.0.0",
     "serverless-webpack": "^5.2.0",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.4",
