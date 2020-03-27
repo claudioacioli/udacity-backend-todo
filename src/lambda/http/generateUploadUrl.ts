@@ -27,10 +27,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   }
 }
 
-function getUploadUrl(todoId: string){
+function getUploadUrl(todoId: string): string {
   return s3.getSignedUrl('putObject', {
     Bucket: bucketName,
     Key: todoId,
     Expires: urlExpiration
-  })
+  }) as string
 }
