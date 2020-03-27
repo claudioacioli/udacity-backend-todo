@@ -141,6 +141,10 @@ functions:
         Action:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_USER_INDEX}
+      - Effect: Allow
+        Action:
+          - s3:HeadObject
+        Resource: arn:aws:s3:::${self:provider.environment.TODOS_IMAGES_S3_BUCKET}
 
 resources:
   Resources:
