@@ -2,6 +2,7 @@ import 'source-map-support/register'
 
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
 import { getTodosByUser } from '../../businessLogic/todo'
+import { getAttachmentUrl } from '../../businessLogic/s3'
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   
@@ -9,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   const todos = await getTodosByUser(jwtToken)
 
   for(const todo of todos)
-    todo["attachmentUrl"] = todo.imageUrl
+    todo['attachmentUrl'] = await getAttachmentUrl(todo.todoId)
 
   return {
     statusCode: 200,
